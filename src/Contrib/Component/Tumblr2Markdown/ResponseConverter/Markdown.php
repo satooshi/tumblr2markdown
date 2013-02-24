@@ -10,16 +10,6 @@ class Markdown
     {
         $this->rootDir = $rootDir;
         $this->exclude = $exclude;
-
-        /*
-        if (empty($slug)) {
-            continue;
-        }
-
-        if (!in_array('blog', $tag)) {
-            continue;
-        }
-        */
     }
 
     public function convertXml(array $posts)
@@ -28,8 +18,10 @@ class Markdown
             mkdir($this->rootDir);
         }
 
+        $decoder = new ReadApiDecoder();
+
         foreach ($posts as $post) {
-            $data = $this->convertPost($post);
+            $data = $decoder->decode($post);
 
             if (!empty($this->exclude) && $this->exclude($data)) {
                 continue;
@@ -48,50 +40,6 @@ class Markdown
         }
 
         return false;
-    }
-
-    // post data
-
-    protected function convertPost(\SimpleXMLElement $post)
-    {
-        return array(
-            'id'            => (string)$post['id'],
-            'url-with-slug' => (string)$post['url-with-slug'],
-            'date'          => new \DateTime((string)$post['date']),
-            'slug'          => (string)$post['slug'],
-            'tag'           => $this->getTag($post),
-            'title'         => $this->getTitle($post),
-            'body'          => $this->getbody($post),
-        );
-    }
-
-    protected function getTag($post)
-    {
-        $tag = array();
-
-        if (isset($post->tag)) {
-            foreach ($post->tag as $t) {
-                $tag[] = "$t";
-            }
-        }
-
-        return $tag;
-    }
-
-    protected function getTitle($post)
-    {
-        $title = "regular-title";
-        $xml = isset($post->$title) ? $post->$title : '';
-
-        return "$xml";
-    }
-
-    protected function getbody($post)
-    {
-        $body = "regular-body";
-        $xml = isset($post->$body) ? $post->$body : '';
-
-        return "$xml";
     }
 
     // file IO

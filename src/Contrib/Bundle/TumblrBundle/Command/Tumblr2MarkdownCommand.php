@@ -3,6 +3,7 @@ namespace Contrib\Bundle\TumblrBundle\Command;
 
 use Contrib\Component\Tumblr2Markdown\ApiClient\V1\TumblrClient;
 use Contrib\Component\Tumblr2Markdown\ResponseConverter\Markdown;
+use Contrib\Component\Tumblr2Markdown\ResponseConverter\SinatraRedirectionDumper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -26,6 +27,12 @@ class Tumblr2MarkdownCommand extends AbstractCommand
             InputOption::VALUE_REQUIRED,
             'output directory',
             '_posts'
+        )
+        ->addOption(
+            'dump-redirect', // --dump-redirect
+            'd', // -d
+            InputOption::VALUE_NONE,
+            'output directory'
         )
         ->addOption(
             'type', // --type
@@ -87,6 +94,11 @@ class Tumblr2MarkdownCommand extends AbstractCommand
 
         $converter = new Markdown($output);
         $converter->convertXml($posts);
+
+        if ($input->getOption('dump-redirect')) {
+            $dumper = new SinatraRedirectionDumper();
+            $dumper->convertXml($posts);
+        }
     }
 
     protected function buildQuery(InputInterface $input)
