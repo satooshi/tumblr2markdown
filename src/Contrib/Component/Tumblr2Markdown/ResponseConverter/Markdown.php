@@ -134,9 +134,14 @@ class Markdown
 
         file_put_contents($path, "\n" . $markdown, FILE_APPEND | LOCK_EX);
 
-        // clean up
+        // mv markdown to under _post directory
+        $newPath = $this->rootDir . "/" . $metaMarkdown;
+        rename($path, $newPath);
+
+        // clean up tmp files
         unlink($bodyPath);
         unlink($bodyMarkdownPath);
+        rmdir($dir);
 
         return $filename;
     }

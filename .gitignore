@@ -19,3 +19,7 @@ app/config/parameters.yml
 
 # composer
 composer.lock
+
+# artifact
+_posts
+

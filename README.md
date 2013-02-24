@@ -45,8 +45,8 @@ $ git clone git@github.com:satooshi/tumblr2markdown.git
 
 ```sh
 # show help
-$ php app/console tumblr:markdown -h
+$ php app/console.php tumblr:markdown -h
 
 # run
-$ php app/console tumblr:markdown -b satooshi-jp -t text --tagged blog
+$ php app/console .php tumblr:markdown -b satooshi-jp -t text --tagged blog
 ```
