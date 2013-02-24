@@ -1,12 +1,23 @@
 {
     "name": "satooshi/tumblr2markdown",
     "description": "converter tumblr blog to Octopress markdown",
-    "autoload": {
-        "psr-0": { "": "src/" }
-    },
+    "keywords": ["tumblr", "octopress", "markdown", "export"],
+    "homepage": "https://github.com/satooshi/tumblr2markdown",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Kitamura Satoshi",
+            "email": "with.no.parachute@gmail.com",
+            "homepage": "https://www.facebook.com/satooshi.jp"
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
         "symfony/console": "2.1.*@dev"
     },
-    "minimum-stability": "stable"
+    "autoload": {
+        "psr-0": { "": "src/" }
+    }
 }
