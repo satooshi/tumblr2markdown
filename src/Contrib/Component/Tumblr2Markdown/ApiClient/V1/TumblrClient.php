@@ -48,10 +48,11 @@ class TumblrClient
             $query['start'] = $start;
 
             $xml   = $this->read($query);
-            $posts = array_merge($posts, $xml->xpath('posts//post'));
+            $currentPosts = $xml->xpath('posts//post');
+            $posts = array_merge($posts, $currentPosts);
 
             $start = (int)$xml->posts->attributes()->start + $query['num'];
-        } while($start <= (int)$xml->posts['total']);
+        } while(count($currentPosts) == $query['num'] && $start <= (int)$xml->posts['total']);
 
         return $posts;
     }
