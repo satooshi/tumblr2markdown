@@ -18,21 +18,21 @@ class Tumblr2MarkdownCommand extends AbstractCommand
             'blogname', // --blogname
             'b', // -b
             InputOption::VALUE_REQUIRED,
-            'your blog name',
+            'Your blog name',
             null
         )
         ->addOption(
             'output', // --output
             'o', // -o
             InputOption::VALUE_REQUIRED,
-            'output directory',
+            'Output directory',
             '_posts'
         )
         ->addOption(
             'dump-redirect', // --dump-redirect
             'd', // -d
             InputOption::VALUE_NONE,
-            'output directory'
+            'Dump redirection code for Sinatra'
         )
         ->addOption(
             'type', // --type
