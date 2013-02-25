@@ -100,7 +100,7 @@ class Markdown
             '---',
             'layout: post',
             sprintf('title: "%s"', $title),
-            sprintf('date: %s', $dt->format('Y-m-d H:i:s')),
+            sprintf('date: %s', $dt->format('Y-m-d H:i')),
             'comments: false',
             sprintf('categories: [%s]', implode(', ', array_map(function ($t) { return sprintf("'%s'", $t);}, $tag))),
             '---',
