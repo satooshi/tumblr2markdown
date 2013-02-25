@@ -48,5 +48,12 @@ $ git clone git@github.com:satooshi/tumblr2markdown.git
 $ php app/console.php tumblr:markdown -h
 
 # run
-$ php app/console .php tumblr:markdown -b satooshi-jp -t text --tagged blog
+$ php app/console.php tumblr:markdown -b satooshi-jp -t text --tagged blog
 ```
+
+# Limitation
+
+Current tumblr2markdown has limitations.
+
+- text type only
+- html format only
