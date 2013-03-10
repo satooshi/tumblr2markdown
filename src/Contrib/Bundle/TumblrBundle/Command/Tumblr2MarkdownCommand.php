@@ -1,6 +1,8 @@
 <?php
 namespace Contrib\Bundle\TumblrBundle\Command;
 
+use Contrib\Component\Tumblr2Markdown\Response\Post;
+
 use Contrib\Component\Tumblr2Markdown\ApiClient\V1\TumblrClient;
 use Contrib\Component\Tumblr2Markdown\ResponseConverter\Markdown;
 use Contrib\Component\Tumblr2Markdown\ResponseConverter\SinatraRedirectionDumper;
@@ -33,6 +35,12 @@ class Tumblr2MarkdownCommand extends AbstractCommand
             'd', // -d
             InputOption::VALUE_NONE,
             'Dump redirection code for Sinatra'
+        )
+        ->addOption(
+            'dump-data', // --dump-data
+            'x', // -x
+            InputOption::VALUE_NONE,
+            'Dump xml'
         )
         ->addOption(
             'type', // --type
@@ -75,6 +83,7 @@ class Tumblr2MarkdownCommand extends AbstractCommand
     {
         $blogName = $input->getOption('blogname');
         $output   = $input->getOption('output');
+        $dump     = $input->getOption('dump-data');
 
         if ($blogName === null) {
             throw new \RuntimeException('--blogname must be specified.');
@@ -92,12 +101,21 @@ class Tumblr2MarkdownCommand extends AbstractCommand
 
         $this->console(sprintf('%d posts found', count($posts)));
 
-        $converter = new Markdown($output);
-        $converter->convertXml($posts);
+        if ($dump) {
+            foreach ($posts as $post) {
+                $data  = new Post($post);
+                $array = $data->toArray();
 
-        if ($input->getOption('dump-redirect')) {
-            $dumper = new SinatraRedirectionDumper();
-            $dumper->convertXml($posts);
+                var_dump($array);
+            }
+        } else {
+            $converter = new Markdown($output);
+            $converter->convertXml($posts);
+
+            if ($input->getOption('dump-redirect')) {
+                $dumper = new SinatraRedirectionDumper();
+                $dumper->convertXml($posts);
+            }
         }
     }
 

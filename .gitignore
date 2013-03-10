@@ -22,4 +22,6 @@ composer.lock
 
 # artifact
 _posts
+bak_posts/*
+work/*
 
